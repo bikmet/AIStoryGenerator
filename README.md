@@ -39,12 +39,13 @@ cd backend
 ```
 
 ### 3. Create and activate a virtual environment
-```Windows (PowerShell):
+Windows (PowerShell):
+```
 python -m venv venv
 .\venv\Scripts\Activate.ps1
 ```
-
-```macOS / Linux::
+macOS / Linux:
+```
 python3 -m venv venv
 source venv/bin/activate
 ```
