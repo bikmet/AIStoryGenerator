@@ -20,10 +20,11 @@ class Settings(BaseSettings):
     #since ALLOWED_ORIGINS url are split by a comma, store them in a list
     @field_validator("ALLOWED_ORIGINS")
     def parse_allowed_origins(cls, v:str) -> List[str]:
-        if v:
-            return v.split(",") 
-        else:
-            return []
+        if isinstance(v, str):
+            return [origin.strip() for origin in v.split(",") if origin.strip()]
+        elif isinstance(v, list):
+            return v
+        return []
 
     #set the configuration to correctly load the .env file
     class Config:

@@ -1,47 +1,78 @@
 # core/prompts.py
 
-STORY_PROMPT = """You are a creative story writer that creates engaging choose-your-own-adventure stories.
-Generate a complete branching story with multiple paths and endings.
+STORY_PROMPT = """You are a creative story writer that creates concise choose-your-own-adventure stories.
+Generate a complete branching story in raw JSON.
 
-The story should have:
-1. A compelling title
-2. A starting situation (root node) with 2-3 options
-3. Each option should lead to another node with its own options
-4. Some paths should lead to endings (both winning and losing)
-5. At least one path should lead to a winning ending
+STORY RULES:
+1. Tree Depth: Exactly 2 to 3 levels deep total. Do NOT exceed 3 levels.
+2. Branching: The root node must have exactly 2 options. Each intermediate child node must have exactly 2 options.
+3. Endings: Every branch must end at Level 2 or 3 with an ending node ("isEnding": true, "options": []).
+4. Content Length: Keep each node's "content" short (1 to 2 sentences max).
+5. At least one ending must be winning ("isWinningEnding": true) and one must be losing ("isWinningEnding": false).
 
-Story structure requirements:
-- Each node should have 2-3 options except for ending nodes
-- The story should be 3-4 levels deep (including root node)
-- Add variety in the path lengths (some end earlier, some later)
-- Make sure there's at least one winning path
+SYNTAX RULES:
+- Output valid, raw JSON only without markdown code fences.
+- Always include commas between JSON key-value pairs.
 
-CRITICAL OUTPUT RULES:
-- Output valid, raw JSON only.
-- Do NOT wrap your output in markdown code fences (no ```json or ```).
-- Do NOT output schema definitions ($defs, type, properties). Write actual story text.
-- Follow this exact JSON structure:
+Follow this exact JSON structure:
 
 {{
-    "title": "Story Title",
+    "title": "A Stage of Fire and Strings",
     "rootNode": {{
-        "content": "The starting situation of the story",
+        "content": "You step onto the stage at the legendary arena. Right as the music begins, your guitar amplifier cuts out.",
         "isEnding": false,
         "isWinningEnding": false,
         "options": [
             {{
-                "text": "Option 1 text",
+                "text": "Kick the backup amplifier into gear",
                 "nextNode": {{
-                    "content": "What happens for option 1",
+                    "content": "Power surges through the stage as the backup amp roars to life. The crowd cheers wildly.",
                     "isEnding": false,
                     "isWinningEnding": false,
                     "options": [
                         {{
-                            "text": "Option 1a text",
+                            "text": "Play an explosive solo",
                             "nextNode": {{
-                                "content": "You reached a winning conclusion!",
+                                "content": "Your solo brings down the house and lands you a record deal! You win!",
                                 "isEnding": true,
                                 "isWinningEnding": true,
+                                "options": []
+                            }}
+                        }},
+                        {{
+                            "text": "Smash your guitar on stage",
+                            "nextNode": {{
+                                "content": "You trip over a stage cable and the crowd boos you off stage.",
+                                "isEnding": true,
+                                "isWinningEnding": false,
+                                "options": []
+                            }}
+                        }}
+                    ]
+                }}
+            }},
+            {{
+                "text": "Sing acoustic while the crew fixes the audio",
+                "nextNode": {{
+                    "content": "You step up to the mic alone and lead an acoustic chant with the crowd.",
+                    "isEnding": false,
+                    "isWinningEnding": false,
+                    "options": [
+                        {{
+                            "text": "Invite a fan onto the stage to sing",
+                            "nextNode": {{
+                                "content": "The fan nails the harmony and the video goes viral! You win!",
+                                "isEnding": true,
+                                "isWinningEnding": true,
+                                "options": []
+                            }}
+                        }},
+                        {{
+                            "text": "Walk off the stage in frustration",
+                            "nextNode": {{
+                                "content": "You storm off into the green room and the show is canceled.",
+                                "isEnding": true,
+                                "isWinningEnding": false,
                                 "options": []
                             }}
                         }}
