@@ -1,9 +1,8 @@
 #takes in all environment variables from .env and map them into Python objects (to use in our code)
 
 from typing import List
-from pydanctic_settings import BaseSettings
 from pydantic import field_validator
-
+from pydantic_settings import BaseSettings
 
 class Settings(BaseSettings):
     API_PREFIX: str = '/api'
@@ -14,6 +13,9 @@ class Settings(BaseSettings):
     ALLOWED_ORIGINS: str = ""
 
     OPENAI_API_KEY: str
+
+    CLOUDFLARE_ACCOUNT_ID: str
+    CLOUDFLARE_API_TOKEN: str
 
     #since ALLOWED_ORIGINS url are split by a comma, store them in a list
     @field_validator("ALLOWED_ORIGINS")

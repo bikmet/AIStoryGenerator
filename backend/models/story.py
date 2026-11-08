@@ -14,7 +14,7 @@ class Story(Base):
     session_id = Column(String, index=True)
     created_at = Column(DateTime(timezone=True), server_default=func.now())
 
-    nodes = relationship("StoryNode", back_populates = "story")
+    nodes = relationship("StoryNodes", back_populates = "story")
 
 
 class StoryNodes(Base):

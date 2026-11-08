@@ -6,9 +6,13 @@ from pydantic import BaseModel
 
 #pydantic makes it so that we don't need to check the data is correctly structued, and instead is done automatically by pydantic
 
+
 class StoryOptionsSchema(BaseModel):
     text: str
     node_id: Optional[int] = None
+
+
+#-- for all nodes --
 
 class StoryNodeBase(BaseModel):
     content: str
@@ -24,6 +28,8 @@ class CompleteStoryNodeResponse(StoryNodeBase): #inherit from StoryNodeBase
         from_attributes = True
 
 
+# -- for all current story --
+
 class StoryBase(BaseModel):
     title: str
     session_id: Optional[str] = True
@@ -31,10 +37,10 @@ class StoryBase(BaseModel):
     class Config:
         from_attributes = True
 
-class CreateStoryRequest(BaseModel):
+class CreateStoryRequest(BaseModel): #from frontend to backend
     theme: str
 
-class CompleteStoryResponse(StoryBase):
+class CompleteStoryResponse(StoryBase): #from backend to frontend
     id: int
     created_at: datetime
     root_node: CompleteStoryNodeResponse
