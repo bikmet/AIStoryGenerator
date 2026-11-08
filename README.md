@@ -28,8 +28,8 @@ Set up your backend, keep the AI running
 
 ### 1. Clone the Repository
 ```bash
-git clone [https://github.com/](https://github.com/)<your-username>/<your-repo-name>.git
-cd <your-repo-name>
+git clone [https://github.com/](https://github.com/)bikmet/AIStoryGenerator.git
+cd AIStoryGenerator
 
 ```
 
